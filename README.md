@@ -1,4 +1,5 @@
-# BloodBridge - Smart Emergency Blood Coordination Platform
+# BloodBridge 
+Smart Emergency Blood Coordination Platform
 
 BloodBridge is a Python, CustomTkinter, and MySQL DBMS project for coordinating emergency blood requests. It tracks city-wise blood stock, donor availability, emergency requests, priority alerts, donation history, and analytics through a single desktop dashboard.
 
