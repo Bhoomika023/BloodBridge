@@ -11,15 +11,25 @@ BloodBridge is a Python, CustomTkinter, and MySQL DBMS project for coordinating 
 - City-wise blood stock dashboard with Safe, Low, and Critical indicators
 - Emergency request creation with priority-based workflow
 - Donor matching using medically accurate blood compatibility
-- Emergency alerts linked to their source requests
-- Donor registration, search, and availability management
-- Donation history with search and filtering
-- Blood inventory monitoring and shortage detection
-- Matplotlib analytics for donor distribution, request trends, supply vs demand, and city ranking
-- Automatic database schema creation and safe runtime upgrades
-- Real-time dashboard refresh for requests, donors, alerts, reports, and analytics
+- Emergency alerts linked to their source request
+- Donor registration, search, and availability updates
+- Donation history table with search filters
+- Matplotlib analytics for donor distribution, request trends, supply/demand, and city ranking
+- Automatic schema creation for classroom/demo setup
+- Real-time dashboard refresh for requests, donors, alerts, and reports
 
----
+## Screenshots
+
+Add screenshots before publishing:
+
+- `screenshots/dashboard.png`
+- `screenshots/emergency-network.png`
+- `screenshots/analytics.png`
+
+Recommended additions:
+
+- `screenshots/requests.png`
+- `screenshots/donation-history.png`
 
 ## Tech Stack
 
