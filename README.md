@@ -1,31 +1,25 @@
 # BloodBridge - Smart Emergency Blood Coordination Platform
 
-BloodBridge is a Python, CustomTkinter, and MySQL DBMS project for coordinating emergency blood requests. It tracks city-wise stock, donor availability, priority requests, emergency alerts, donation history, and analytics from a single desktop dashboard.
+BloodBridge is a Python, CustomTkinter, and MySQL DBMS project for coordinating emergency blood requests. It tracks city-wise blood stock, donor availability, emergency requests, priority alerts, donation history, and analytics through a single desktop dashboard.
+
+> **Note:** This project uses **fictional (dummy) data** for demonstration and academic purposes only. No real patient, donor, hospital, or medical information is included in this repository.
+
+---
 
 ## Features
 
-- City-wise blood stock dashboard with low and critical indicators
-- Emergency request creation and priority queue
+- City-wise blood stock dashboard with Safe, Low, and Critical indicators
+- Emergency request creation with priority-based workflow
 - Donor matching using medically accurate blood compatibility
-- Emergency alerts linked to their source request
-- Donor registration, search, and availability updates
-- Donation history table with search filters
-- Matplotlib analytics for donor distribution, request trends, supply/demand, and city ranking
-- Automatic schema creation for classroom/demo setup
-- Real-time dashboard refresh for requests, donors, alerts, and reports
+- Emergency alerts linked to their source requests
+- Donor registration, search, and availability management
+- Donation history with search and filtering
+- Blood inventory monitoring and shortage detection
+- Matplotlib analytics for donor distribution, request trends, supply vs demand, and city ranking
+- Automatic database schema creation and safe runtime upgrades
+- Real-time dashboard refresh for requests, donors, alerts, reports, and analytics
 
-## Screenshots
-
-Add screenshots before publishing:
-
-- `screenshots/dashboard.png`
-- `screenshots/emergency-network.png`
-- `screenshots/analytics.png`
-
-Recommended additions:
-
-- `screenshots/requests.png`
-- `screenshots/donation-history.png`
+---
 
 ## Tech Stack
 
@@ -35,32 +29,52 @@ Recommended additions:
 - mysql-connector-python
 - python-dotenv
 - Matplotlib
+- Pillow
+
+---
 
 ## Installation
 
-1. Clone the repository and enter the project directory.
+Clone the repository.
 
 ```bash
-cd CrimsonLife
+git clone https://github.com/Bhoomika023/BloodBridge.git
+
+cd BloodBridge
 ```
 
-2. Create and activate a virtual environment.
+Create and activate a virtual environment.
 
 ```bash
 python -m venv .venv
+```
+
+Windows
+
+```bash
 .venv\Scripts\activate
 ```
 
-3. Install dependencies.
+Linux/macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Install the dependencies.
 
 ```bash
 pip install -r requirements.txt
 ```
 
+---
+
 ## Environment Setup
 
 1. Copy `.env.example` to `.env`.
-2. Fill in your local MySQL credentials.
+2. Update the file with your local MySQL credentials.
+
+Example:
 
 ```env
 DB_HOST=localhost
@@ -70,23 +84,25 @@ DB_NAME=bloodbridge_db
 DB_PORT=3306
 ```
 
-Never commit `.env` or real passwords.
+Never commit `.env` or real database credentials.
 
-If you are not using a template file, create `.env` with the same keys shown above.
+---
 
 ## Database Setup
 
-BloodBridge creates the database and required tables automatically when the app starts.
+BloodBridge automatically:
 
-The runtime schema is upgraded in place. Existing tables are preserved and missing columns are added without dropping data.
+- Creates the database (if it does not exist)
+- Creates all required tables
+- Safely upgrades the schema without deleting existing data
 
-Run the app:
+Run the application:
 
 ```bash
 python main.py
 ```
 
-Optional manual setup:
+Optional manual schema setup:
 
 ```sql
 source database/schema.sql;
@@ -98,76 +114,128 @@ Optional demo data seeding:
 python -m database.seed_database
 ```
 
-Startup seed data is intentionally non-destructive. It only inserts baseline data when the relevant tables are empty and does not overwrite existing blood stock.
+The demo seeder is intentionally **non-destructive**. It only inserts missing demo data and never overwrites existing records or blood stock.
 
-The demo seeder generates realistic Karnataka-style sample data for donors, requests, donation history, and hospitals.
+---
+
+## Demo Data
+
+This project includes realistic dummy data representing:
+
+- Blood donors
+- Hospitals
+- Emergency requests
+- Blood inventory
+- Donation history
+- Emergency alerts
+
+All names, phone numbers, hospitals, and records are fictional and included solely for demonstration purposes.
+
+---
 
 ## Demo Workflow
 
-1. Start the app and open the Dashboard.
-2. Create a critical emergency request with a city, district, hospital, and contact number.
-3. Review the emergency banner, matching donors, and low-stock indicators.
-4. Move to Emergency Network to search donors by blood group, availability, and location.
-5. Resolve a request and confirm that the analytics and history views refresh.
-6. Use Donation History filters to search by donor, city, blood group, hospital, or date.
+1. Launch the application.
+2. Open the Dashboard.
+3. Create an emergency blood request.
+4. Review the emergency alert banner and matching donors.
+5. Search donors by blood group, availability, city, or district.
+6. Arrange blood and resolve the request.
+7. Review Donation History.
+8. Explore the Analytics dashboard.
+
+---
 
 ## Database Schema
 
-Core tables used by the dashboard:
+Core tables used in the project:
 
-- `donor` - donor identity, location, status, and contact details
-- `blood_request` - patient requests with hospital, city, district, state, priority, and status
-- `emergency_alerts` - emergency coordination records linked to request rows
-- `city_stock` - location and blood-group inventory
-- `hospitals` - demo hospital and emergency contact data
-- `donation_history` - donation records, units, date, and optional hospital context
+- `donor` – donor information, availability, and contact details
+- `blood_request` – emergency requests with patient, hospital, location, priority, and status
+- `emergency_alerts` – emergency coordination records linked to requests
+- `city_stock` – city-wise blood inventory
+- `hospitals` – hospital information
+- `donation_history` – completed donation records
 
-The schema is compatible with existing data and is upgraded in place.
+The schema supports foreign keys, indexes, and safe runtime upgrades.
+
+---
 
 ## Stock Handling Policy
 
-Creating an emergency request checks city stock and raises a critical alert when stock is insufficient. Stock is not deducted at request creation time because a request is not yet a confirmed issue of blood. Stock should be reduced only after blood is actually arranged or issued, preventing false inventory loss for cancelled or unresolved requests.
+Creating an emergency request checks the available blood stock and raises a critical alert when inventory is insufficient.
+
+Stock is **not deducted** when a request is created because a request does not necessarily result in blood being issued.
+
+Inventory should only be reduced after blood has actually been arranged or donated, preventing incorrect stock reduction for cancelled or unresolved requests.
+
+---
 
 ## Project Structure
 
 ```text
-CrimsonLife/
-  assets/             Static assets
-  config/             Environment-based database configuration
-  database/           SQL schema, upgrade script, and seeding command
-  gui/                CustomTkinter dashboard
-  models/             Simple data models
-  services/           Database and business-logic services
-  main.py             Application entry point
-  requirements.txt    Python dependencies
+BloodBridge/
+│
+├── assets/
+├── config/
+├── database/
+├── gui/
+├── models/
+├── services/
+├── main.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+├── .gitignore
+└── .env.example
 ```
+
+---
 
 ## Architecture
 
-- `gui/dashboard.py` owns the desktop UI, live refresh, dialogs, cards, tables, and charts.
-- `services/` contains database-backed business logic for requests, donors, alerts, stock, reporting, and validation.
-- `database/seed_database.py` produces realistic demo data without dropping or recreating existing records.
-- `services/setup_service.py` performs safe runtime upgrades to keep the schema compatible.
+- `gui/` contains the CustomTkinter user interface.
+- `services/` contains the business logic for donors, requests, alerts, stock management, reporting, validation, and blood compatibility.
+- `database/` contains the schema, upgrade scripts, and demo data seeding utilities.
+- `config/` manages environment-based database configuration.
+- `main.py` is the application entry point.
+
+---
 
 ## Future Improvements
 
-- Add automated tests for blood compatibility, request resolution, and stock updates
-- Add export/report generation for admin use
-- Add screenshot capture and a short demo video for submissions
-- Split the dashboard into smaller page modules if the UI grows further
-- Add user authentication if the project is expanded beyond demo scope
-- Add donor distance scoring if geocoding becomes available
+- Add automated unit tests
+- Export reports to PDF and Excel
+- Role-based user authentication
+- Email/SMS notification support
+- GIS-based nearest donor identification
+- Cloud deployment
+- Mobile companion application
+
+---
 
 ## Academic Notes
 
-BloodBridge demonstrates DBMS concepts including CRUD operations, joins, aggregate reports, transactions, foreign keys, indexes, schema setup, and realistic emergency-priority workflows.
+BloodBridge demonstrates practical implementation of:
 
-## Screenshots Checklist
+- CRUD Operations
+- SQL Queries
+- Joins
+- Aggregate Functions
+- Foreign Keys
+- Indexing
+- Database Schema Design
+- Transactions
+- Data Validation
+- Dashboard Analytics
+- Emergency Workflow Management
 
-Before final submission, capture:
+---
 
-- Dashboard overview with a critical alert
-- Emergency network with donor matching
-- Emergency request page with the queue and matching donor counts
-- Donation history with filters
-- Analytics dashboard with the expanded charts
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+See the `LICENSE` file for details.
