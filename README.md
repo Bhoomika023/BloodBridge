@@ -20,16 +20,27 @@ BloodBridge is a Python, CustomTkinter, and MySQL DBMS project for coordinating 
 
 ## Screenshots
 
-Add screenshots before publishing:
+### Dashboard
 
-- `screenshots/dashboard.png`
-- `screenshots/emergency-network.png`
-- `screenshots/analytics.png`
+![Dashboard](screenshots/dashboard.png)
 
-Recommended additions:
+---
 
-- `screenshots/requests.png`
-- `screenshots/donation-history.png`
+### Emergency Donor Network
+
+![Emergency Donor Network](screenshots/emergency-network.png)
+
+---
+
+### Emergency Requests
+
+![Emergency Requests](screenshots/requests.png)
+
+---
+
+### Analytics Dashboard
+
+![Analytics Dashboard](screenshots/analytics.png)
 
 ## Tech Stack
 
